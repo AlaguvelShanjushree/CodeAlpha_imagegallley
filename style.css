@@ -1,0 +1,53 @@
+body {
+    text-align: center;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+.gallery-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+#gallery-image {
+    width: 500px;
+    height: 300px;
+    border-radius: 10px;
+    transition: opacity 0.5s ease-in-out;
+}
+
+button {
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 20px;
+    margin: 10px;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #444;
+}
+
+.thumbnail-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.thumbnail {
+    width: 100px;
+    height: 70px;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+    border: 2px solid transparent;
+}
+
+.thumbnail:hover {
+    border: 2px solid black;
+}
