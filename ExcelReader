@@ -31,3 +31,8 @@ public class ExcelReader {
 
 
 }
+
+
+//WebElement a=driver.findElement(By.xpath("//input[@name='q']"));
+//a.sendKeys(ExcelReader.excelReader(0, 0));
+
