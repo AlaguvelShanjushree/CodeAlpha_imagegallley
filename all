@@ -1,0 +1,29 @@
+//ScreenShot
+public void capture() throws IOException{
+File src =((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+File dest = new File(System.getProperty("user.dir")+"/screenshots/homepage.png);
+FileUtils.copyFile(src,dest);
+}
+
+//Verify
+WebElement ver=
+Assert.assertEquals(ver.getText(),"Exact sentence check failed.");
+EventHandler.assertEquals(ver.getText(),"Exact sentence check failed.");
+
+
+//Alert
+Alert a1=driver.switchTo().alert();
+a1.accept();
+a1.dismiss();
+
+
+//Hover
+WebElement menu =
+Actions actions = new Actions(driver);
+actions.moveToElement(menu).perform();
+Thread.sleep(2000);
+
+//Scrolling
+JavascriptExecutor js = (JavascriptExecutor) driver;
+js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
+Thread.sleep(2000);
