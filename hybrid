@@ -1,0 +1,87 @@
+package runner;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.reporter.ExtentReporter;
+
+import utils.Base;
+import utils.ExcelReader;
+import utils.LoggerHandler;
+import utils.Reporter;
+import utils.Screenshot;
+
+public class TestRunner extends  Base{
+    static ExtentReports ext=null;
+    static ExtentTest test=null;
+    Reporter rep=new Reporter();
+
+    
+
+    @BeforeClass
+    public void BeforeClass()
+    {
+        ext=rep.generateExtentReport("reports");
+
+    }
+    @BeforeMethod
+    public void launchBrowser() throws MalformedURLException {
+        // launch your browser    
+        openBrowser();
+
+    }
+
+    @Test
+    public void testOne() throws IOException {
+        // write or call ur pages here
+        WebElement fir=driver.findElement(By.xpath("//input[@id=':R54m2rl676:--input']"));
+        fir.click();
+        fir.sendKeys("FirstName");
+
+        WebElement las=driver.findElement(By.xpath("//input[@id=':R64m2rl676:--input']"));
+        las.click();
+        las.sendKeys(ExcelReader.readdata("/home/coder/project/workspace/Project/textdata/data.xlsx","Sheet1",0,0));
+
+        WebElement ema=driver.findElement(By.xpath("//input[@id=':R58m2rl676:--input']"));
+        ema.click();
+        ema.sendKeys("Work001@email.com");
+
+        WebElement coun=driver.findElement(By.xpath("//select[@id=':R2q2rl676:--input']"));
+        coun.click();
+        WebElement ind=driver.findElement(By.xpath("//option[@value='India'][1]"));
+        ind.click();
+
+        Screenshot.getScreenShot(driver,"screenshots");
+        test=ext.createTest("screenshot");
+        test.addScreenCaptureFromPath(Screenshot.getScreenShot(driver,"screenshots"));
+        
+
+
+        for(int i=0;i<300;i++){
+            LoggerHandler.logInfo("pass");
+            test.pass("pass");
+        }    
+    }
+    @AfterMethod
+    public void tearDown() {
+        // quit the driver here
+        if(driver!=null)
+        {
+            driver.quit();
+        }
+    }
+    @AfterClass
+    public void AfterClass(){
+        ext.flush();
+    }
+}
