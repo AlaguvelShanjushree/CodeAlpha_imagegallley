@@ -1,0 +1,15 @@
+@Test
+    public void test1()
+    {
+        Properties prop=new Properties();
+        try(FileInputStream fis=new FileInputStream("/home/coder/project/workspace/Project/config/app.properties"))
+        {
+            prop.load(fis);
+            System.out.println(prop.getProperty("app.name"));
+
+        }
+        catch(IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
