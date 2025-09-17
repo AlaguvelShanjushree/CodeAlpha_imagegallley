@@ -1,15 +1,16 @@
 @Test
     public void test1()
     {
+    String path="/home/coder/project/workspace/Project/config/config.properties";
         Properties prop=new Properties();
-        try(FileInputStream fis=new FileInputStream("/home/coder/project/workspace/Project/config/app.properties"))
+        try(FileInputStream fis=new FileInputStream(path))
         {
             prop.load(fis);
-            System.out.println(prop.getProperty("app.name"));
-
+            
         }
         catch(IOException e)
         {
             e.printStackTrace();
         }
+        System.out.println(prop.getProperty("name"));
     }
