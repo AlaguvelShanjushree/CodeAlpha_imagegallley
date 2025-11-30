@@ -1,0 +1,113 @@
+package runner;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+
+import utils.Base;
+import utils.LoggerHandler;
+import utils.Reporter;
+import utils.Screenshot;
+import utils.LoggerHandler;
+
+
+public class TestSample extends Base{
+    static ExtentReports ext=null;
+    static ExtentTest test=null;
+    Reporter rep=new Reporter();
+
+    @BeforeClass
+    public void bef(){
+        ext=Reporter.generateExtentReport("reports");
+ 
+    }
+    @BeforeMethod
+    public void Before(){
+        openBrowser();
+    }
+
+    @Test
+    public void testsample(){
+        WebElement manage=driver.findElement(By.xpath("//button[@id='onetrust-pc-btn-handler']"));
+        manage.click();
+        Screenshot.captureScreenShot("itchotel_screenshot");
+        test=ext.createTest("itchotel_screenshot");
+        test = ext.createTest("Footer Navigation Test");
+        Reporter.attachScreenshotToReport( "itchotel_screenshot",test, "description");
+
+        LoggerHandler.info("click on know more");
+        test.pass("click on know more");
+        for(int i=0;i<300;i++){
+            LoggerHandler.info("pass");
+        }
+    }
+    @Test
+    public void testsample2() throws InterruptedException{
+       
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
+        Thread.sleep(2000);
+        WebElement gift=driver.findElement(By.xpath("//a[@aria-label='Gift Card']"));
+        gift.click();
+        WebElement here=driver.findElement(By.xpath("//a[@href='/content/itchotels/in/en/promotions/gift-cards/participating-hotels.html']"));
+        here.click();
+        WebElement sus=driver.findElement(By.xpath("(//a[@href='/content/itc-corporate/in/en/corporate/sustainability.html'])[2]"));
+        sus.click();
+        Screenshot.captureScreenShot("screenshots");
+        test=ext.createTest("screenshot");
+               
+    }
+    @Test
+    public void testsample3() throws InterruptedException{
+        
+        WebElement login=driver.findElement(By.xpath("//*[@id=\"loginDropdownMenuButton\"]/span[1]"));
+        login.click();
+        WebElement login2=driver.findElement(By.xpath("/html/body/div[4]/div[1]/nav[2]/ul/li[6]/div/div/div[1]/a[2]/span"));
+        login2.click();
+        WebElement logged=driver.findElement(By.xpath("/html/body/div[10]/div/div/div[1]/div/div[4]/form/div[1]/input"));
+        logged.click();
+        logged.sendKeys("abcd@gmail.com");
+        WebElement pass=driver.findElement(By.xpath("/html/body/div[10]/div/div/div[1]/div/div[4]/form/div[4]/input"));
+        pass.click();
+        pass.sendKeys("abcd");
+
+        LoggerHandler.info("hover on signin");
+        test.pass("hover on signin");
+        for(int i=0;i<300;i++){
+            LoggerHandler.info("pass");
+            test.pass("pass");
+        }      
+        WebElement in=driver.findElement(By.xpath("/html/body/div[10]/div/div/div[1]/div/div[4]/form/div[7]/button"));
+        in.click();
+        Screenshot.captureScreenShot("screenshots");
+        test=ext.createTest("screenshot");
+
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
+        WebElement feed=driver.findElement(By.xpath("//a[@aria-label='Feedback']"));
+        feed.click();
+        driver.navigate().back();
+            
+    }
+
+    @AfterMethod
+    public void After(){
+        if(driver!=null)
+        {
+            driver.quit();
+        }
+    }
+    @AfterClass
+    public void aft(){
+        ext.flush();
+    }
+}
