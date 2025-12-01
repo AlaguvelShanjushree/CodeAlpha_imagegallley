@@ -1,0 +1,67 @@
+package runner;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+
+import utils.Base;
+import utils.ExcelReader;
+import utils.Reporter;
+import utils.Screenshot;
+
+public class TestSample extends Base{
+
+    static ExtentReports ext=null;
+    static ExtentTest test=null;
+    Reporter rep=new Reporter();
+    
+    @BeforeClass
+    public void BeforeClass()
+    {
+        ext=rep.generateExtentReport("reports");
+
+    }
+
+    @BeforeMethod
+    public void launchBrowser() throws MalformedURLException {
+        // launch your browser
+      driver=  openBrowser();
+    }
+
+    @Test
+    public void testOne() throws IOException {
+        WebElement fun1=driver.findElement(By.xpath("//input[@placeholder='Search']"));
+        fun1.sendKeys(ExcelReader.readdata("/home/coder/project/workspace/Project/testdata/data.xlsx","Sheet1",0,0));
+        fun1.sendKeys(Keys.ENTER);
+       
+        Screenshot.getScreenShot(driver,"screenshots");
+        test=ext.createTest("screenshot");
+        test.addScreenCaptureFromPath(Screenshot.getScreenShot(driver,"screenshots"));
+    }
+
+    @AfterMethod
+    public void tearDown() {
+        // quit the driver here
+        if(driver!=null){
+           driver.quit();
+        }
+    }
+
+    @AfterClass
+    public void AfterClass(){
+        ext.flush();
+    }
+
+}
