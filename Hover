@@ -30,3 +30,11 @@ Thread.sleep(2000);
 WebElement element = driver.findElement(By.id("footer")); 
 JavascriptExecutor js = (JavascriptExecutor) driver;
 js.executeScript("arguments[0].scrollIntoView(true);", element);
+
+// Screenshot in hybrid
+Screenshot.getScreenShot(driver,"screenshots");
+test=ext.createTest("screenshot");
+String path = Screenshot.getScreenShot(driver, "screenshots");
+test.addScreenCaptureFromPath(path);
+// Reporter.attachScreenshotToReport( test,driver, "screenshot");
+        
