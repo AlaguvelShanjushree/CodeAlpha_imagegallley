@@ -1,0 +1,105 @@
+
+package runner;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.reporter.ExtentReporter;
+
+import utils.Base;
+import utils.ExcelReader;
+import utils.LoggerHandler;
+import utils.Reporter;
+import utils.Screenshot;
+
+public class TestRunner extends  Base{
+    static ExtentReports ext=null;
+    static ExtentTest test=null;
+    Reporter rep=new Reporter();
+
+    
+
+    @BeforeClass
+    public void BeforeClass()
+    {
+        ext=rep.generateExtentReport("reports");
+
+    }
+    @BeforeMethod
+    public void launchBrowser() throws MalformedURLException {
+        // launch your browser    
+        openBrowser();
+
+    }
+
+    @Test
+    public void testOne() throws IOException, InterruptedException {
+        WebElement menu = driver.findElement(By.xpath("/html/body/div[2]/div/span/span/div/nav/div[2]/div/div/div/div[1]/div[2]/div/div/button/span")); 
+        Actions actions = new Actions(driver);
+        actions.moveToElement(menu).perform();
+        Thread.sleep(2000);
+        
+        LoggerHandler.info("hover on explore");
+        test = ext.createTest("hover on explore");
+        test.pass("hover on explore");
+        for(int i=0;i<300;i++){
+            LoggerHandler.info("PASS");
+            test.pass("PASS");
+        }   
+        Screenshot.captureScreenShot("screenshots");
+        test.addScreenCaptureFromPath("screenshots");     
+        test=ext.createTest("screenshot");
+
+    }
+    @Test
+    public void testtwo() throws IOException, InterruptedException {
+        
+        LoggerHandler.info("click on login");
+        test.pass("click on login");
+        for(int i=0;i<300;i++){
+            LoggerHandler.info("pass");
+            test.pass("pass");
+        }
+        Screenshot.captureScreenShot("coursera_screenshot");
+        test = ext.createTest("Footer Navigation Test");
+        Reporter.attachScreenshotToReport( "coursera_screenshot",test, "description");
+
+        driver.get("https://www.coursera.org/about/cookies-manage");
+        WebElement login=driver.findElement(By.xpath("/html/body/div[2]/div/div/div[1]/nav/div[1]/div/div/div/div[3]/div/div[1]/a/span"));
+        login.click();
+        WebElement confirm=driver.findElement(By.xpath("/html/body/div[5]/div[2]/div/div[3]/div[1]/button[2]"));
+        confirm.click();
+       
+
+    }
+    @Test
+    public void testthree() throws IOException, InterruptedException {
+        WebElement teach=driver.findElement(By.xpath("/html/body/div[2]/div/div[2]/footer/div[2]/div/div/div[3]/ul/li[4]/a"));
+        teach.click();     
+        Screenshot.captureScreenShot("screenshot");
+        test=ext.createTest("screenshot");
+    }
+    @AfterMethod
+    public void tearDown() {
+        // quit the driver here
+        if(driver!=null)
+        {
+            driver.quit();
+        }
+    }
+    @AfterClass
+    public void AfterClass(){
+        ext.flush();
+    }
+}
