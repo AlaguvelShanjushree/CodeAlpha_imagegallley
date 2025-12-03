@@ -4,6 +4,10 @@ Actions actions = new Actions(driver);
 actions.moveToElement(menu).perform();
 Thread.sleep(2000);
 
+        Actions actions = new Actions(driver);
+        WebElement element = driver.findElement(By.xpath(""));
+        actions.moveToElement(element).perform();
+
 //ScreenShot
 public void capture() throws IOException{
 File src =((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
