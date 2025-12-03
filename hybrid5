@@ -1,0 +1,88 @@
+
+package runner;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.reporter.ExtentReporter;
+
+import utils.Base;
+import utils.ExcelReader;
+import utils.LoggerHandler;
+import utils.Reporter;
+import utils.Screenshot;
+
+public class TestSample extends  Base{
+    static ExtentReports ext=null;
+    static ExtentTest test=null;
+    Reporter rep=new Reporter();
+
+    
+
+    @BeforeClass
+    public void BeforeClass()
+    {
+        ext=rep.generateExtentReport("reports");
+
+    }
+    @BeforeMethod
+    public void launchBrowser() throws MalformedURLException {
+        openBrowser();
+
+    }
+
+    @Test
+    public void testOne() throws IOException, InterruptedException {
+        LoggerHandler.info("click on New");
+        test = ext.createTest("click on New");
+        test.pass("click on New");
+        for(int i=0;i<300;i++){
+            LoggerHandler.info("PASS");
+            test.pass("PASS");
+        }   
+        Screenshot.captureScreenShot("screenshots");
+        // test.addScreenCaptureFromPath("screenshots");     
+        test=ext.createTest("screenshots");
+    }
+    @Test
+    public void testtwo() throws IOException, InterruptedException {
+        LoggerHandler.info("click on tap to apply");
+        // test = ext.createTest("click on tap to apply");
+        test.pass("click on tap to apply");
+
+        for(int i=0;i<300;i++){
+            LoggerHandler.info("pass");
+            test.pass("pass");
+        }
+        Screenshot.captureScreenShot("screenshot");
+        test=ext.createTest("screenshot");
+    }
+    @Test
+    public void testthree() throws IOException, InterruptedException {
+        Screenshot.captureScreenShot("gapfactory_screenshot");
+        test = ext.createTest("Footer Navigation Test");
+        Reporter.attachScreenshotToReport( "gapfactory_screenshot",test, "description");
+    }
+    @AfterMethod
+    public void tearDown() {
+        if(driver!=null)
+        {
+            driver.quit();
+        }
+    }
+    @AfterClass
+    public void AfterClass(){
+        ext.flush();
+    }
+}
