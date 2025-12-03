@@ -42,3 +42,13 @@ String path = Screenshot.getScreenShot(driver, "screenshots");
 test.addScreenCaptureFromPath(path);
 // Reporter.attachScreenshotToReport( test,driver, "screenshot");
         
+  
+        // Screenshot.getScreenShot(driver,"screenshots");
+        // test=ext.createTest("screenshot");
+        // test.addScreenCaptureFromPath(Screenshot.getScreenShot(driver,"screenshots"));
+
+        // String path = Screenshot.getScreenShot(driver, "screenshots");
+        // test.addScreenCaptureFromPath(path);
+        // Reporter.attachScreenshotToReport( test,driver, "screenshot");
+       
+        
